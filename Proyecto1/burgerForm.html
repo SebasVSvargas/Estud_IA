@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <title>Las Delicias</title>
+    </head>
+
+    <body>
+        
+        <header> 
+            <h1>Hamburguesas las Delicias</h1> 
+            <h2>Haz tu pedido aqui:</h2>
+        </header>
+
+        <form action="submit">
+
+            <fieldset>
+                <legend>Datos del cliente</legend>
+                <label for="name">Nombre:</label>
+                <input type="text" name="name" id="name" requiered placeholder="Tu nombre">
+                <br><br>
+
+                <label for="email">Email:</label>
+                <input type="email" required placeholder="svs.seb@gmail.com" id="email">
+                <br><br>    
+                <label for="telefono">Telefono</label>
+                <input type="tel" name="telefono" id="telefono" required 
+                placeholder="3004005000" pattern="^3[0-9]{9}$" 
+                title="deben ser 10 digitos y empezar por 3">
+            </fieldset> 
+
+            <br>            
+
+            <fieldset>
+                <legend>Pedido</legend>
+
+                <label> <strong><em>Tipo Hamburguesa:</em></strong></label><br>
+                <input type="radio" name="tipo" id="classic">
+                <label for="classic">Clásica</label>
+                <br>
+                <input type="radio" name="tipo" id="doble">
+                <label for="doble">DobleCarne</label>
+                <br>
+                <input type="radio" name="tipo" id="veggi">
+                <label for="veggi">Vegetariana</label>
+                <br><br>
+
+
+                <!--label >Ingredientes Extra:</label><br>
+                <input type="checkbox">Queso</input><br>
+                <input type="checkbox">Huevo</input><br>
+                <input type="checkbox">Tocineta</input><br><br-->
+
+
+                <label>Ingredientes Extra:</label><br>
+                <input type="checkbox" id="queso" name="ingredientes" value="queso">
+                <label for="queso">Queso</label><br>
+                <input type="checkbox" id="huevo" name="ingredientes" value="huevo">
+                <label for="huevo">Huevo</label><br>
+                <input type="checkbox" id="tocineta" name="ingredientes" value="tocineta">
+                <label for="tocineta">Tocineta</label><br><br>
+                
+                <label for="cantidad">Cantidad:</label>
+                <input type="number" name="cantidad" id="cantidad" 
+                min="1" max="5">
+                <br><br>
+
+                <label for="comentario1">Comentarios Adicionales:</label><br>                
+                <input type="text" id="comentario1" name="comentario1"><br><br>
+                
+                <label for="comentario2">Comentarios Adicionales:</label><br>                
+                <textarea name="comentario2" id="comentario2" rows="4" cols="40" 
+                placeholder="Escribe tus comentarios aquí"></textarea>
+
+            </fieldset>
+
+            <fieldset name="entrega">
+                <legend><strong>Entrega</strong></legend>
+                <br>
+                <!-- Dirección estructurada: calle, ciudad y código postal -->
+                <label for="street">Dirección (calle y número):</label>
+                <input type="text" name="street" id="street" required placeholder="Calle 123" autocomplete="street-address"><br><br>
+                <label for="city">Ciudad:</label>
+                <input type="text" name="city" id="city" required placeholder="Medellín" autocomplete="address-level2"><br><br>
+                <label for="postal">Código Postal:</label>
+                <input type="text" name="postal" id="postal" placeholder="050035" autocomplete="postal-code" pattern="\d{3,10}"><br><br>    
+            
+                <label for="">Forma de pago:</label>
+                <input list="metodosPago">
+                <datalist id="metodosPago">
+                    <option value="Efectivo"></option>
+                    <option value="Tarjeta"></option>
+                    <option value="Transferencia"></option>
+                </datalist>
+            </fieldset><br>
+
+            <button type="submit" id="submit">Realizar Pedido</button>
+
+        </form>
+
+    </body>
+
+
+
+</html>

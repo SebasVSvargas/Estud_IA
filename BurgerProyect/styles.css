@@ -1,0 +1,78 @@
+/* 1. Reset básico para quitar márgenes por defecto y definir fuente */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 2. Estilos del Banner e Imagen Principal */
+header {
+    text-align: center; /* Centra todo el contenido dentro del header */
+    background-color: #f8f9fa; /* Color de fondo suave */
+    padding-bottom: 2rem;
+}
+
+.banner-img {
+    width: 100%;        /* Ocupa todo el ancho de la pantalla */
+    height: 350px;      /* Altura fija para el banner */
+    object-fit: cover;  /* La imagen recorta excesos para llenar el área sin estirarse */
+    display: block;
+}
+
+/* 3. Estilos del Logo y Título */
+.header-logo {
+    margin-top: -60px; /* Sube el contenedor para que se superponga al banner */
+    position: relative; /* Necesario para que el z-index o superposición funcione bien */
+}
+
+.logo {
+    width: 120px;       /* Tamaño controlado del logo */
+    height: auto;
+    border-radius: 50%; /* Hace la imagen redonda */
+    border: 5px solid white; /* Borde blanco para separarlo del fondo */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombra suave */
+    background-color: white;
+}
+
+.header-text h1 {
+    margin: 10px 0 5px 0;
+    color: #333;
+    font-size: 2.5rem;
+}
+
+header h2 {
+    color: #667; /* Color gris para el subtítulo */
+    font-weight: normal;
+    margin-top: 0;
+}
+
+/* 4. Estilos de la Barra de Navegación */
+nav {
+    background-color: #333; /* Fondo oscuro para la barra */
+    position: sticky;       /* Se queda pegada arriba al hacer scroll */
+    top: 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+nav ul {
+    list-style: none;       /* Quita los puntos de la lista */
+    margin: 0;
+    padding: 0;
+    display: flex;          /* Organiza los elementos en fila */
+    justify-content: center; /* Centra los elementos horizontalmente */
+}
+
+nav ul li a {
+    display: block;
+    padding: 15px 25px;     /* Espacio interno de los botones */
+    text-decoration: none;  /* Quita el subrayado de los enlaces */
+    color: white;           /* Texto blanco */
+    font-weight: bold;
+    text-transform: uppercase; /* Todo en mayúsculas */
+    transition: background-color 0.3s; /* Transición suave al pasar el mouse */
+}
+
+nav ul li a:hover {
+    background-color: #ff9800; /* Color naranja al pasar el mouse */
+    color: #fff;
+}

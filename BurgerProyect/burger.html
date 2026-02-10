@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tank Burguer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <!--banner-->
+        <picture>
+            <img src="assets/bannerBurguer.jpg" 
+            class="banner-img"
+            alt="banner Burger SebastianVS" 
+            width="600" height="200">
+            <!-- <img src="https://picsum.dev/1200/1080" 
+            class="banner-img"
+            alt="banner Burguer SebastianVS" 
+            width="700" height="300"> -->
+        </picture>
+
+        <div class="header-logo">
+            <!--Logo-->
+            <img src="assets/hamburger.png" alt="Logo de Tank Burguer" class="logo">
+            <div class="header-text">
+                <h1>Tank Burger</h1>
+            </div>
+        </div>
+            <h2>La mejor hamburguesa</h2>
+    </header>
+
+    <main>
+
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#menu">Menú</a></li>
+                <li><a href="#ubicacion">Ubicación</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+
+        <section>
+            <h2 id="inicio">Inicio</h2>
+            <p>Bienvenido a Tank Burguer, donde la calidad y el sabor se unen para ofrecerte 
+                la mejor experiencia en hamburguesas. 
+                ¡Haz tu pedido ahora!</p>
+        </section>
+        
+        <!--Productos populares-->
+        <fieldset>
+                <h2 id="menu">Menú</h2>
+                <h3>Hamburguesas Populares</h3>
+                <ul>
+                    <li>Hamburguesa Clásica - $10.000</li>
+                    <li>Hamburguesa Doble Carne - $15.000</li>
+                    <li>Hamburguesa Vegetariana - $12.000</li>
+                </ul>
+            </article>
+        </fieldset>
+
+        <section>
+            <h3>Bebidas</h3>
+            <ol>
+                <li>Refresco - $3.000</li>
+                <li>Agua - $2.000</li>
+                <li>Jugo Natural - $4.000</li>
+            </ol>
+        </section>
+
+        <section>
+            <h3>Acompañamientos</h3>
+            <ul>
+                <li>Papas Fritas - $5.000</li>
+                <li>Aros de Cebolla - $6.000</li>
+                <li>Ensalada - $4.000</li>
+            </ul>
+        </section>
+
+        <!--Tabla - Producto/ingredientes/precio/nivel picante -->
+        <table>
+            <caption>Detalles de las Hamburguesas</caption>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Ingredientes</th>
+                    <th>Precio</th>
+                    <th>Nivel Picante</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Hamburguesa Clásica</td>
+                    <td>Carne, Lechuga, Tomate, Queso</td>
+                    <td>$10.000</td>
+                    <td>Bajo</td>
+                </tr>
+                <tr>
+                    <td>Hamburguesa Doble Carne</td>
+                    <td>Doble Carne, Queso, Tocino, Cebolla</td>
+                    <td>$15.000</td>
+                    <td>Medio</td>
+                </tr>
+                <tr>
+                    <td>Hamburguesa Vegetariana</td>
+                    <td>Hamburguesa de Vegetales, Lechuga, Tomate, Aguacate</td>
+                    <td>$12.000</td>
+                    <td>Ninguno</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!--Formulario de reservación-->
+        
+        <fieldset>
+            <h2>Haz tu Pedido</h2>
+            <form  action="#" method="post">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required 
+                placeholder="Tu nombre">
+                <br><br>
+
+                <!--fecha reserva-->
+                <label for="fecha">Fecha de Reserva:</label>
+                <input type="date" id="fecha" name="fecha" required>
+                <br><br>
+
+                <label for="celular">Celular:</label>
+                <input type="tel" id="celular" name="celular" required 
+                placeholder="3004005000" pattern="^3[0-9]{9}$"><br><br>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required 
+                placeholder="svs.sebas@example.com">
+                <br><br>
+
+                <label for="sede">Sede:</label><br><br>
+                <input type="radio" id="sede1" name="sede" value="sede1" required>
+                <label for="sede1">Sede - Centro</label>
+                <br>
+                <input type="radio" id="sede2" name="sede" value="sede2">
+                <label for="sede2">Sede - Norte</label>
+                <br><br>
+
+                <label for="Comentarios">Comentarios</label><br>
+                <textarea id="Comentarios" name="Comentarios" rows="4" cols="50" 
+                placeholder="Escribe tus comentarios aqui..."></textarea>
+
+                <button>Enviar Pedido</button>
+            </form>
+        </fieldset>
+
+
+        <section>
+            <h2 id="ubicacion">Ubicación</h2>
+            <p>Estamos ubicados en la Calle 123 #45-67, Ciudad Medellín. 
+                ¡Visítanos y disfruta de nuestras deliciosas hamburguesas!</p>
+        </section>
+
+        <section>
+            <h2 id="contacto">Contacto</h2>
+            <p>Para más información o para hacer un pedido, contáctanos al 
+                teléfono 300-400-5000 o al correo
+                </p>
+        </section>         
+
+
+    </main>
+
+</body>
+
+
+
+
+</html>

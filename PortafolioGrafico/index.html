@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Portafolio Básico</title>
+</head>
+
+<body>
+
+  <header>
+    <h1>Portafolio Gráfico — Sebastian Vargas</h1>
+    <p>colección de trabajos visuales y proyectos multimedia.</p>
+  </header>
+
+  <main>
+    <section id="galeria">
+      <h2>Galería de Imágenes</h2>
+  
+        <picture>
+          <source srcset="assets/images/file_example_WEBP_50kB.webp" type="image/webp">
+          <img src="assets/images/file_example_JPG_100kB.jpg" alt="Ejemplo de imagen JPG" width="480">
+        </picture>
+
+        <picture>
+          <source srcset="assets/images/file_example_WEBP_250kB.webp" type="image/webp">
+          <img src="assets/images/file_example_PNG_500kB.png" alt="Ejemplo de imagen PNG" width="480">
+        </picture>
+
+    </section>
+
+    <section id="multimedia" aria-labelledby="multimedia-titulo">
+      <h2 id="multimedia-titulo">Multimedia (Video)</h2>
+      <p>Ejemplo de video integrado con controles y mensaje de fallback.</p>
+
+      <video controls width="640" poster="assets/images/file_example_JPG_100kB.jpg">
+        <source src="assets/video/file_example_MP4_640_3MG.mp4" type="video/mp4">
+        Tu navegador no soporta el elemento de video. Puedes descargar el archivo <a href="assets/video/file_example_MP4_640_3MG.mp4">aquí</a>.
+      </video>
+    </section>
+
+    <section id="audio" aria-labelledby="audio-titulo">
+      <h2 id="audio-titulo">Recursos de Audio</h2>
+      <p>Ejemplo de audio comprimido con controles nativos.</p>
+      <audio controls>
+        <source src="assets/audio/file_example_MP3_700KB.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+      </audio>
+    </section>
+
+    <section id="svg" aria-labelledby="svg-titulo">
+      <h2 id="svg-titulo">Gráfico SVG Embebido</h2>
+      <p>SVG simple embebido directamente en el HTML (ícono/logo).</p>
+
+      <!-- SVG embebido -->
+      <svg id="svg-logo" width="150" height="150" viewBox="0 0 100 100" role="img" aria-labelledby="svg-title svg-desc">
+        <title id="svg-title">Logo geométrico</title>
+        <desc id="svg-desc">Triángulo y círculo superpuestos formando un logo minimalista</desc>
+        <rect width="100" height="100" rx="12" fill="#f5f5f5"/>
+        <circle cx="35" cy="40" r="18" fill="#007acc"/>
+        <polygon points="60,75 85,30 35,50" fill="#00a86b" opacity="0.95"/>
+      </svg>
+
+      <p>SVG cargado como imagen externa:</p>
+      <img src="assets/svg/camera-svgrepo-com.svg" alt="Ícono de cámara" width="100">
+
+    </section>
+
+
+
+  </main>
+
+  <footer>
+    <p>Contacto / Créditos — Autor ficticio · © 2026</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Salud de Flota TI - Mejorado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        .chart-container { position: relative; height: 280px; width: 100%; }
+        .status-pill { padding: 4px 10px; border-radius: 9999px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
+        
+        /* Semáforo de Prioridad */
+        .priority-critical { background-color: #991b1b; color: #fff; }
+        .priority-high { background-color: #ea580c; color: #fff; }
+        .priority-medium { background-color: #ca8a04; color: #fff; }
+        .priority-low { background-color: #475569; color: #fff; }
+
+        .bg-good { background-color: #dcfce7; color: #166534; }
+        .bg-acceptable { background-color: #fef9c3; color: #854d0e; }
+        .bg-critical { background-color: #fee2e2; color: #991b1b; }
+        
+        /* Custom scrollbar for table */
+        .custom-scrollbar::-webkit-scrollbar { height: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <header class="flex flex-col lg:flex-row lg:items-center justify-between mb-8 gap-6">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-800 tracking-tight">Dashboard de Activos TI <span class="text-blue-600">v2.0</span></h1>
+                <p class="text-slate-500 text-lg">Reporte de Rendimiento, Inversión y Satisfacción</p>
+            </div>
+            <div class="flex flex-wrap gap-4">
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 min-w-[140px]">
+                    <p class="text-[10px] text-slate-400 uppercase font-bold tracking-widest">Inversión Estimada</p>
+                    <p class="text-xl font-bold text-emerald-600">$2.450.000</p>
+                </div>
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 min-w-[140px]">
+                    <p class="text-[10px] text-slate-400 uppercase font-bold tracking-widest">Total Equipos</p>
+                    <p class="text-xl font-bold text-blue-600">45</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- KPI Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col">
+                <span class="text-slate-400 text-xs font-bold uppercase mb-1">Óptimo</span>
+                <div class="flex items-end justify-between">
+                    <h3 class="text-3xl font-bold text-slate-800">28</h3>
+                    <span class="text-green-500 font-semibold text-sm mb-1"><i class="fas fa-arrow-up mr-1"></i>62%</span>
+                </div>
+                <div class="w-full bg-slate-100 h-1.5 mt-3 rounded-full overflow-hidden">
+                    <div class="bg-green-500 h-full" style="width: 62%"></div>
+                </div>
+            </div>
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col">
+                <span class="text-slate-400 text-xs font-bold uppercase mb-1">Aceptable</span>
+                <div class="flex items-end justify-between">
+                    <h3 class="text-3xl font-bold text-slate-800">11</h3>
+                    <span class="text-yellow-500 font-semibold text-sm mb-1">24%</span>
+                </div>
+                <div class="w-full bg-slate-100 h-1.5 mt-3 rounded-full overflow-hidden">
+                    <div class="bg-yellow-500 h-full" style="width: 24%"></div>
+                </div>
+            </div>
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col">
+                <span class="text-slate-400 text-xs font-bold uppercase mb-1">Crítico</span>
+                <div class="flex items-end justify-between">
+                    <h3 class="text-3xl font-bold text-slate-800">6</h3>
+                    <span class="text-red-500 font-semibold text-sm mb-1">14%</span>
+                </div>
+                <div class="w-full bg-slate-100 h-1.5 mt-3 rounded-full overflow-hidden">
+                    <div class="bg-red-500 h-full" style="width: 14%"></div>
+                </div>
+            </div>
+            <div class="bg-blue-600 p-5 rounded-2xl shadow-md flex flex-col text-white">
+                <span class="text-blue-100 text-xs font-bold uppercase mb-1">Satisfacción</span>
+                <div class="flex items-end justify-between">
+                    <h3 class="text-3xl font-bold">78%</h3>
+                    <i class="far fa-smile-beam text-2xl mb-1 text-blue-200"></i>
+                </div>
+                <p class="text-[10px] mt-3 text-blue-100 italic">Basado en encuestas directas</p>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-bold text-slate-700">Estado General de la Flota</h3>
+                    <i class="fas fa-chart-pie text-slate-300"></i>
+                </div>
+                <div class="chart-container">
+                    <canvas id="healthChart"></canvas>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-bold text-slate-700">Diagnóstico de Fallas Frecuentes</h3>
+                    <i class="fas fa-tools text-slate-300"></i>
+                </div>
+                <div class="chart-container">
+                    <canvas id="issuesChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Table -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-8">
+            <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-50/50">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-700">Equipos que requieren Intervención</h3>
+                    <p class="text-xs text-slate-500">Listado priorizado por impacto operativo</p>
+                </div>
+                <div class="flex gap-2">
+                    <span class="status-pill priority-critical">Urgente</span>
+                    <span class="status-pill priority-high">Alta</span>
+                    <span class="status-pill priority-medium">Media</span>
+                </div>
+            </div>
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left border-collapse min-w-[1000px]">
+                    <thead>
+                        <tr class="bg-slate-100/50 text-slate-500 text-[10px] uppercase tracking-widest font-bold">
+                            <th class="p-4 border-b">Usuario / Cargo</th>
+                            <th class="p-4 border-b text-center">Satisf.</th>
+                            <th class="p-4 border-b">Prioridad</th>
+                            <th class="p-4 border-b">Rendimiento</th>
+                            <th class="p-4 border-b">Último Manto.</th>
+                            <th class="p-4 border-b">Problema / Recomendación</th>
+                            <th class="p-4 border-b text-right">Costo Est.</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-xs text-slate-700">
+                        <!-- Item 1 -->
+                        <tr class="hover:bg-slate-50 border-b border-slate-100 transition-colors">
+                            <td class="p-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-xs text-white font-bold shadow-sm">JP</div>
+                                    <div>
+                                        <p class="font-bold text-slate-800">Juan Pérez</p>
+                                        <p class="text-[10px] text-blue-600 font-semibold uppercase">Ingeniero</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4 text-2xl text-center">😡</td>
+                            <td class="p-4"><span class="status-pill priority-critical">Urgente</span></td>
+                            <td class="p-4"><span class="status-pill bg-critical">Crítico</span></td>
+                            <td class="p-4 text-slate-500 font-mono">14/03/2023</td>
+                            <td class="p-4 max-w-xs">
+                                <p class="font-semibold text-slate-800">HDD al 100% de uso.</p>
+                                <p class="text-slate-500 mt-1 italic">Recomendación: Cambio inmediato a SSD NVMe de 1TB.</p>
+                            </td>
+                            <td class="p-4 text-right font-bold text-slate-900">$450.000</td>
+                        </tr>
+                        <!-- Item 2 -->
+                        <tr class="hover:bg-slate-50 border-b border-slate-100 transition-colors">
+                            <td class="p-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-purple-600 flex items-center justify-center text-xs text-white font-bold shadow-sm">MG</div>
+                                    <div>
+                                        <p class="font-bold text-slate-800">Maria Garcia</p>
+                                        <p class="text-[10px] text-purple-600 font-semibold uppercase">Desarrollador</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4 text-2xl text-center">☹️</td>
+                            <td class="p-4"><span class="status-pill priority-high">Alta</span></td>
+                            <td class="p-4"><span class="status-pill bg-critical">Crítico</span></td>
+                            <td class="p-4 text-slate-500 font-mono">02/11/2023</td>
+                            <td class="p-4 max-w-xs">
+                                <p class="font-semibold text-slate-800">RAM Insuficiente (8GB).</p>
+                                <p class="text-slate-500 mt-1 italic">Recomendación: Ampliación a 32GB RAM para contenedores Docker.</p>
+                            </td>
+                            <td class="p-4 text-right font-bold text-slate-900">$680.000</td>
+                        </tr>
+                        <!-- Item 3 -->
+                        <tr class="hover:bg-slate-50 border-b border-slate-100 transition-colors">
+                            <td class="p-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center text-xs text-white font-bold shadow-sm">CR</div>
+                                    <div>
+                                        <p class="font-bold text-slate-800">Carlos Ruiz</p>
+                                        <p class="text-[10px] text-amber-600 font-semibold uppercase">Delineante</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4 text-2xl text-center">😐</td>
+                            <td class="p-4"><span class="status-pill priority-medium">Media</span></td>
+                            <td class="p-4"><span class="status-pill bg-acceptable">Aceptable</span></td>
+                            <td class="p-4 text-slate-500 font-mono">15/05/2022</td>
+                            <td class="p-4 max-w-xs">
+                                <p class="font-semibold text-slate-800">Sobrecalentamiento excesivo.</p>
+                                <p class="text-slate-500 mt-1 italic">Recomendación: Mantenimiento preventivo completo y cambio de pasta térmica.</p>
+                            </td>
+                            <td class="p-4 text-right font-bold text-slate-900">$120.000</td>
+                        </tr>
+                        <!-- Item 4 -->
+                        <tr class="hover:bg-slate-50 border-b border-slate-100 transition-colors">
+                            <td class="p-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-rose-500 flex items-center justify-center text-xs text-white font-bold shadow-sm">AL</div>
+                                    <div>
+                                        <p class="font-bold text-slate-800">Ana López</p>
+                                        <p class="text-[10px] text-rose-600 font-semibold uppercase">Gestión Humana</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4 text-2xl text-center">🙂</td>
+                            <td class="p-4"><span class="status-pill priority-low">Baja</span></td>
+                            <td class="p-4"><span class="status-pill bg-acceptable">Aceptable</span></td>
+                            <td class="p-4 text-slate-500 font-mono">10/01/2024</td>
+                            <td class="p-4 max-w-xs">
+                                <p class="font-semibold text-slate-800">Disco lleno (95%).</p>
+                                <p class="text-slate-500 mt-1 italic">Recomendación: Migración de archivos a Sharepoint y depuración.</p>
+                            </td>
+                            <td class="p-4 text-right font-bold text-slate-900">$0</td>
+                        </tr>
+                        <!-- Item 5 -->
+                        <tr class="hover:bg-slate-50 border-b border-slate-100 transition-colors">
+                            <td class="p-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-xs text-white font-bold shadow-sm">RV</div>
+                                    <div>
+                                        <p class="font-bold text-slate-800">Roberto V.</p>
+                                        <p class="text-[10px] text-indigo-600 font-semibold uppercase">Desarrollador</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4 text-2xl text-center">☹️</td>
+                            <td class="p-4"><span class="status-pill priority-critical">Urgente</span></td>
+                            <td class="p-4"><span class="status-pill bg-critical">Crítico</span></td>
+                            <td class="p-4 text-slate-500 font-mono">N/A</td>
+                            <td class="p-4 max-w-xs">
+                                <p class="font-semibold text-slate-800">Obsolescencia (Generación 4).</p>
+                                <p class="text-slate-500 mt-1 italic">Recomendación: Reposición completa del equipo por Laptop Corporativa.</p>
+                            </td>
+                            <td class="p-4 text-right font-bold text-slate-900">$1.200.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Action Panel -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 bg-slate-900 rounded-2xl p-6 text-white flex flex-col justify-between shadow-lg">
+                <div>
+                    <h4 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-lightbulb text-yellow-400"></i>
+                        Resumen de Inversión Estratégica
+                    </h4>
+                    <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                        Con una inversión de <strong>$2.450.000</strong>, podemos mitigar el 100% de los casos críticos de Ingeniería y Desarrollo, que son las áreas con mayor impacto en el ROI de la compañía. El mantenimiento preventivo para el resto de la flota asegura la continuidad por el próximo semestre.
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <button class="bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2">
+                        <i class="fas fa-file-invoice-dollar"></i> Aprobar Presupuesto
+                    </button>
+                    <button class="bg-slate-800 hover:bg-slate-700 px-5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2 border border-slate-700">
+                        <i class="fas fa-download"></i> Exportar a PDF
+                    </button>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <h4 class="font-bold text-slate-700 mb-4">Próximos Mantenimientos</h4>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
+                        <div class="text-blue-600 bg-blue-50 w-8 h-8 flex items-center justify-center rounded-lg font-bold text-[10px]">FEB</div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-800">Área Ingeniería</p>
+                            <p class="text-[10px] text-slate-500">12 Equipos pendientes</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
+                        <div class="text-purple-600 bg-purple-50 w-8 h-8 flex items-center justify-center rounded-lg font-bold text-[10px]">MAR</div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-800">Desarrollo Soft.</p>
+                            <p class="text-[10px] text-slate-500">8 Equipos pendientes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            // Health Distribution Chart
+            const ctxHealth = document.getElementById('healthChart').getContext('2d');
+            new Chart(ctxHealth, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Óptimo', 'Aceptable', 'Crítico'],
+                    datasets: [{
+                        data: [28, 11, 6],
+                        backgroundColor: ['#22c55e', '#eab308', '#ef4444'],
+                        borderWidth: 8,
+                        borderColor: '#ffffff',
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: { 
+                            position: 'right',
+                            labels: {
+                                usePointStyle: true,
+                                font: { size: 11, weight: '600' }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Issues Bar Chart
+            const ctxIssues = document.getElementById('issuesChart').getContext('2d');
+            new Chart(ctxIssues, {
+                type: 'bar',
+                data: {
+                    labels: ['Memoria RAM', 'Discos HDD', 'Térmico', 'Obsolescencia', 'Software'],
+                    datasets: [{
+                        label: 'Equipos Afectados',
+                        data: [7, 5, 3, 2, 4],
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 6,
+                        barThickness: 20
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { 
+                            beginAtZero: true, 
+                            grid: { color: '#f1f5f9' },
+                            ticks: { font: { size: 10 } }
+                        },
+                        x: { 
+                            grid: { display: false },
+                            ticks: { font: { size: 10 } }
+                        }
+                    }
+                }
+            });
+        };
+    </script>
+</body>
+</html>

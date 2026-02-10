@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h2>1. Flex Direction (row vs column)</h2>
+        <div class="container flex-row">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+        </div>
+        <div class="container flex-column">
+            <div class="item">1</div>
+            <div class="item">2</div>
+        </div>
+
+    <h2>2. Justify Content (Distribución)</h2>
+        <div class="container justify-center">
+            <div class="item">Centrado1</div>
+            <div class="item">Centrado2</div>
+        </div>
+        <div class="container justify-between">
+            <div class="item">Lado A</div>
+            <div class="item">Lado B</div>
+        </div>
+
+    <h2>3. Align Items (Alineación eje cruzado)</h2>
+        <div class="container align-center">
+            <div class="item">Verticalmente Centrado</div>
+        </div>
+
+    <h2>4. Wrap y Gap (Multilínea y Espaciado)</h2>
+        <div class="container flex-wrap gap-20">
+            <div class="item" style="width: 30%;">Item 1</div>
+            <div class="item" style="width: 30%;">Item 2</div>
+            <div class="item" style="width: 30%;">Item 3</div>
+            <div class="item" style="width: 30%;">Item 4 (Wrap)</div>
+        </div>
+
+    <h2>5. Flex-grow y Order (Propiedades del Hijo)</h2>
+        <div class="container">
+            <div class="item order-first" style="background-color: coral;">1 (Primero por Order)</div>
+            <div class="item grow-1">2 (Grow: ocupa el resto)</div>
+            <div class="item align-self-end">3 (Align-self: abajo)</div>
+        </div>
+</body>
+</html>
