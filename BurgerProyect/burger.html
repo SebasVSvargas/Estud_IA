@@ -31,16 +31,16 @@
             <h2>La mejor hamburguesa</h2>
     </header>
 
-    <main>
+    <nav>
+        <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#menu">Menú</a></li>
+            <li><a href="#ubicacion">Ubicación</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
 
-        <nav>
-            <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#menu">Menú</a></li>
-                <li><a href="#ubicacion">Ubicación</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-        </nav>
+    <main>
 
         <section>
             <h2 id="inicio">Inicio</h2>
@@ -50,7 +50,7 @@
         </section>
         
         <!--Productos populares-->
-        <fieldset>
+        <section>
                 <h2 id="menu">Menú</h2>
                 <h3>Hamburguesas Populares</h3>
                 <ul>
@@ -58,8 +58,8 @@
                     <li>Hamburguesa Doble Carne - $15.000</li>
                     <li>Hamburguesa Vegetariana - $12.000</li>
                 </ul>
-            </article>
-        </fieldset>
+            <!-- SE ELIMINÓ LA ETIQUETA </article> QUE SOBRABA AQUÍ -->
+        </section>
 
         <section>
             <h3>Bebidas</h3>
@@ -120,23 +120,20 @@
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" required 
                 placeholder="Tu nombre">
-                <br><br>
 
                 <!--fecha reserva-->
                 <label for="fecha">Fecha de Reserva:</label>
                 <input type="date" id="fecha" name="fecha" required>
-                <br><br>
 
                 <label for="celular">Celular:</label>
                 <input type="tel" id="celular" name="celular" required 
-                placeholder="3004005000" pattern="^3[0-9]{9}$"><br><br>
+                placeholder="3004005000" pattern="^3[0-9]{9}$">
 
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required 
                 placeholder="svs.sebas@example.com">
-                <br><br>
 
-                <label for="sede">Sede:</label><br><br>
+                <label for="sede">Sede:</label>
                 <input type="radio" id="sede1" name="sede" value="sede1" required>
                 <label for="sede1">Sede - Centro</label>
                 <br>
@@ -144,14 +141,13 @@
                 <label for="sede2">Sede - Norte</label>
                 <br><br>
 
-                <label for="Comentarios">Comentarios</label><br>
+                <label for="Comentarios">Comentarios</label>
                 <textarea id="Comentarios" name="Comentarios" rows="4" cols="50" 
                 placeholder="Escribe tus comentarios aqui..."></textarea>
 
                 <button>Enviar Pedido</button>
             </form>
         </fieldset>
-
 
         <section>
             <h2 id="ubicacion">Ubicación</h2>
@@ -164,14 +160,16 @@
             <p>Para más información o para hacer un pedido, contáctanos al 
                 teléfono 300-400-5000 o al correo
                 </p>
-        </section>         
-
-
+        </section>  
     </main>
 
+
+    <footer>
+        <!-- Creado con simbolo corazón naranja por Sebastian Vargas -->
+        <p>Creado con <span style="color: #ff9800;">❤</span> por Sebastian Vargas</p>
+        <p>© 2026 BurgerProyect. Todos los derechos reservados.</p>
+    </footer>
+
 </body>
-
-
-
 
 </html>

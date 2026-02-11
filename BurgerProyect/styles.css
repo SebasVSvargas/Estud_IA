@@ -76,3 +76,256 @@ nav ul li a:hover {
     background-color: #ff9800; /* Color naranja al pasar el mouse */
     color: #fff;
 }
+
+/* 4.1. Diseño Responsivo (Media Queries) */
+
+/*Esta regla se activa SOLO si la pantalla mide 600px o menos */
+@media (max-width: 500px) {
+    
+    nav{
+        position: inherit;
+    }
+
+    /* Cambia la dirección del menú de fila a columna */
+    nav ul {
+        flex-direction: column; /* Pone los elementos uno debajo del otro */
+        align-items: center;    /* Centra los elementos */
+    }
+
+    /* Hace que los botones ocupen todo el ancho para que sean fáciles de tocar */
+    nav ul li {
+        width: 100%;       /* Ocupa todo el ancho disponible */
+        text-align: center; /* Texto centrado */
+        border-bottom: 1px solid #444; /* Línea separadora suave */
+    }
+
+    nav ul li a {
+        padding: 12px; /* Botones más altos para dedos grandes */
+        display: block; /* Asegura que todo el recuadro sea clickeable */
+    }
+    
+    /* Ajusta el banner para que no sea tan alto en móviles */
+    .banner-img {
+        height: 200px; /* Reducimos la altura de 350px a 200px */
+    }
+    
+    /* El logo se ve mejor un poco más pequeño en móvil */
+    .logo {
+        width: 100px;
+        margin-top: -50px;
+    }
+}
+
+/* 5. Contenedor Principal (Main) - Concepto FLEXBOX */
+main {
+    max-width: 1000px;  /* Ancho máximo para que no se estire demasiado en pantallas grandes */
+    margin: 2rem auto;  /* Centrado horizontalmente (arriba/abajo 2rem, izq/der auto) */
+    padding: 0 1rem;    /* Espacio interno a los lados */
+    
+    /* FLEXBOX: Organiza los hijos directos (secciones) en columna */
+    display: flex;
+    flex-direction: column; 
+    gap: 2rem;              /* Crea un espacio uniforme entre cada sección automáticamente */
+}
+
+/* 6. Estilo de "Tarjetas" para Secciones */
+section, fieldset {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;    /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* Sombra suave para dar efecto flotante */
+    border: 1px solid #eaeaea; /* Borde muy sutil */
+}
+
+/* 7. Listas del Menú - Concepto GRID */
+/* Aplicamos Grid a las listas (ul, ol) que están dentro de secciones */
+section ul, section ol {
+    list-style: none; /* Quitamos los puntos/números por defecto */
+    padding: 0;
+    
+    /* GRID: Sistema de rejilla */
+    display: grid;
+    /* Truco Experto: Crea columnas que miden mínimo 250px. 
+       Si caben más, se crean más; si no, bajan a la siguiente fila. */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem; /* Espacio entre filas y columnas de la rejilla */
+}
+
+section li {
+    background-color: #fff8e1; /* Fondo amarillo claro */
+    padding: 1rem;
+    border-left: 5px solid #ff9800; /* Borde decorativo naranja a la izquierda */
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+/* 9. Estilos de la Tabla */
+
+table {
+    width: 100%;            /* Ocupa todo el ancho disponible */
+    border-collapse: collapse; /* TRUCO: Elimina el doble borde entre celdas */
+    margin: 2rem 0;         /* Espacio arriba y abajo */
+    font-size: 0.9rem;      /* Texto ligeramente más pequeño para que quepa bien */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Sombra elegante */
+    overflow: hidden;       /* Recorta las esquinas si usamos border-radius */
+    border-radius: 10px;    /* Bordes redondeados en las esquinas de la tabla */
+}
+
+/* Estilo para el Título de la tabla (Caption) */
+caption {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: left;       /* Alineado a la izquierda */
+}
+
+/* Cabecera de la tabla (thead) */
+thead tr {
+    background-color: #333; /* Fondo oscuro */
+    color: #ffffff;         /* Texto blanco */
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Celdas (th y td) */
+th, td {
+    padding: 12px 15px;     /* Espacio interno para que el texto respire */
+}
+
+/* Cuerpo de la tabla (tbody) */
+tbody tr {
+    border-bottom: 1px solid #dddddd; /* Línea gris suave entre filas */
+}
+
+/* EFECTO CEBRA: Pinta las filas pares (2, 4, 6...) de un color diferente */
+tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+/* EFECTO HOVER: Resalta la fila cuando pasas el mouse por encima */
+tbody tr:hover {
+    background-color: #fff3e0; /* Un naranja muy suave */
+    cursor: default;           /* El cursor se mantiene normal */
+    font-weight: bold;         /* Hace la letra un poco más gruesa al pasar */
+    color: #d84315;            /* Cambia el color del texto a naranja oscuro */
+}
+
+/* hace la tabla RESPONSIVA (scroll horizontal en móviles) */
+/* Envolvemos la tabla en un div con overflow-x: auto si es necesario, 
+   o aplica display: block a la tabla en pantallas pequeñas */
+@media (max-width: 500px) {
+    table {
+        display: block;      /* Convierte la tabla en un bloque */
+        overflow-x: auto;    /* Permite deslizar horizontalmente si no cabe */
+        white-space: nowrap; /* Evita que el texto se parta en líneas */
+    }
+}
+
+
+/* 10. Estilos del Formulario */
+form {
+    max-width: 600px;       /* Ancho máximo para que no se vea estirado en pantallas grandes */
+    margin: 0 auto;         /* Centrar el formulario dentro del fieldset */
+}
+
+/* Etiquetas (Labels) */
+label {
+    display: block;         /* Hace que ocupe toda la línea (adiós a los <br> del HTML) */
+    margin-bottom: 8px;     /* Espacio entre la etiqueta y su campo */
+    font-weight: bold;      /* Texto en negrita */
+    color: #444;
+}
+
+/* Campos de entrada, Select y Textarea */
+/* Agrupamos todos los tipos de campo que queremos que se vean iguales */
+input[type="text"],
+input[type="date"],
+input[type="tel"],
+input[type="email"],
+textarea {
+    width: 100%;            /* Ocupan todo el ancho disponible del contenedor */
+    padding: 12px;          /* Espacio interno para que el texto no pegue al borde */
+    margin-bottom: 20px;    /* Espacio debajo de cada campo */
+    border: 1px solid #ccc; /* Borde gris suave */
+    border-radius: 5px;     /* Bordes redondeados */
+    box-sizing: border-box; /* IMPORTANTE: Hace que el padding no aumente el ancho total */
+    font-family: inherit;   /* Hereda la fuente de la página */
+    transition: border 0.3s; /* Transición suave al cambiar el borde */
+}
+
+/* Efecto Focus: Cuando el usuario hace clic en el campo */
+input:focus, textarea:focus {
+    border-color: #ff9800;  /* El borde se vuelve naranja */
+    outline: none;          /* Quita el borde azul feo por defecto del navegador */
+    box-shadow: 0 0 5px rgba(255, 152, 0, 0.5); /* Resplandor naranja */
+}
+
+/* Radios (Botones de opción para las Sedes) */
+/* Estos NO deben ser block ni 100% ancho, así que los tratamos aparte */
+input[type="radio"] {
+    width: auto;            /* Ancho automático */
+    margin-right: 10px;     /* Separación con el texto */
+    margin-bottom: 15px;    /* Separación vertical */
+    display: inline-block;  /* Se quedan en línea */
+}
+
+/* Labels específicos para botones de radio (Sedes) */
+/* Usamos el selector de hermano (+) para dar estilo a los labels que siguen a un radio */
+input[type="radio"] + label {
+    display: inline-block;  /* Para que el texto quede al lado del puntito */
+    margin-right: 20px;     /* Espacio entre las opciones */
+    font-weight: normal;    /* Texto normal, no negrita */
+}
+
+/* Estilo del Botón de Enviar */
+button {
+    background-color: #ff9800; /* Fondo naranja */
+    color: white;              /* Texto blanco */
+    padding: 15px 30px;        /* Botón grande */
+    border: none;              /* Sin borde */
+    border-radius: 5px;        /* Bordes redondeados */
+    font-size: 1.1rem;         /* Letra grande */
+    cursor: pointer;           /* Manito al pasar el mouse */
+    width: 100%;               /* Botón de ancho completo */
+    font-weight: bold;
+    text-transform: uppercase; /* Texto en mayúsculas */
+    transition: background-color 0.3s, transform 0.1s; /* Animaciones suaves */
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #e65100; /* Naranja más oscuro al pasar el mouse */
+}
+
+button:active {
+    transform: scale(0.98);    /* Efecto de "presionar" (se encoge un poquito al clic) */
+}
+
+
+/* 11. Footer (Pie de Página) */
+footer {
+    background-color: #222;     /* Fondo casi negro, muy elegante */
+    color: #f1f1f1;             /* Texto gris muy claro (no blanco puro para no cansar la vista) */
+    text-align: center;         /* Todo centrado */
+    padding: 2rem 1rem;         /* Espacio generoso arriba/abajo y un poco a los lados */
+    margin-top: 3rem;           /* Separa el footer del contenido principal (main) */
+    border-top: 5px solid #ff9800; /* Una línea naranja arriba para conectar con tu marca */
+    font-size: 0.9rem;          /* Letra un poco más pequeña que el resto */
+}
+
+footer p {
+    margin: 0.5rem 0;           /* Separación entre los párrafos del footer */
+}
+
+/* Efecto para el corazón*/
+footer span {
+    display: inline-block;      /* Necesario para poder animarlo */
+    animation: latido 1s infinite alternate;
+}
+
+/* Definición de la animación (básico) */
+@keyframes latido {
+    from { transform: scale(1); }
+    to { transform: scale(1.3); }
+}
