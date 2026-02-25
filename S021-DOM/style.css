@@ -1,0 +1,26 @@
+  #lista-tareas li {
+    margin: 10px 0;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  #lista-tareas li.completado {
+    text-decoration: line-through; /* tachado */    
+    color: #888;                  
+  }
+
+  button {
+    margin-left: 10px;
+    padding: 5px 15px;
+    cursor: pointer;
+  }
+
+  .eliminar-btn {
+    margin-top: 5px;
+    padding: 5px 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }

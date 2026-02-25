@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow Pro | Productividad al máximo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="background-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
+  <main class="app-container">
+    <header class="main-header">
+      <div class="logo-area">
+        <span class="logo-icon">✨</span>
+        <div>
+          <h1>TaskFlow <span class="badge">Pro</span></h1>
+          <p>Organiza tus ideas, conquista tu día.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="dashboard">
+      <section class="controls-card">
+        <form id="task-form" class="input-group" autocomplete="off">
+          <input
+            type="text"
+            id="nueva-tarea"
+            placeholder="¿Qué tienes en mente hoy?"
+            maxlength="100"
+            required
+          />
+          <button type="submit" id="btn-agregar">
+            <span class="plus-icon">+</span> Agregar
+          </button>
+        </form>
+
+        <nav class="filter-nav">
+          <button class="filter-btn active" data-filter="all">Todas</button>
+          <button class="filter-btn" data-filter="pending">Pendientes</button>
+          <button class="filter-btn" data-filter="completed">Completadas</button>
+        </nav>
+      </section>
+
+      <section class="stats-row">
+        <div class="stat-card">
+          <span class="stat-label">Total</span>
+          <strong id="total-tareas">0</strong>
+        </div>
+        <div class="stat-card urgent">
+          <span class="stat-label">Pendientes</span>
+          <strong id="tareas-pendientes">0</strong>
+        </div>
+        <div class="stat-card success">
+          <span class="stat-label">Completadas</span>
+          <strong id="tareas-completadas">0</strong>
+        </div>
+      </section>
+
+      <section class="tasks-container">
+        <div class="list-header">
+          <h2>Tus Tareas</h2>
+          <span id="items-count" class="items-count">0 items</span>
+        </div>
+        
+        <div id="estado-vacio" class="empty-state">
+          <div class="empty-icon">📝</div>
+          <p>Todo está en orden por aquí. <br><span>Empieza agregando una tarea.</span></p>
+        </div>
+
+        <ul id="lista-tareas" class="task-list"></ul>
+      </section>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
