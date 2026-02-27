@@ -1,0 +1,11 @@
+/* Estilos para el componente Card */
+
+.card {    
+  margin: 10px;
+  background-color: #758b38;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+}
+    
