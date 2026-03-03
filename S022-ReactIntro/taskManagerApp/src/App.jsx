@@ -12,8 +12,8 @@ function App() {
         <Header title="Mi Gestor de Tareas" />
         <TaskList name="Tareas Pendientes" />    
 
-        <fieldset>
-          <Notes />
+        <fieldset id='recuadro'>
+          <Notes/>
         </fieldset>
 
       </div>
