@@ -1,21 +1,13 @@
 import {useState} from "react" //es el hook de react más usado
 import TaskItem from "./TaskItem";
+import useTask from "../hooks/useTask";
+import CardItem from "./CardItem";
 
 function TaskList({ name }) {
 
-    //valores por defecto para tasks
-    const defaultTasks = [
-        {id:1, text: "Estudiar React", completed: false},
-        {id:2, text: "Estudiar TypeScript", completed: false},
-        {id:3, text: "Estudiar Python", completed: false},
-        {id:4, text: "Estudiar FastApi", completed: false}
-    ]
-
     //const [estado, establecerEstado] = useState(estadoInicial)
-    const [count, setCount] = useState(0)
-    const [tasks, setTasks] = useState(defaultTasks)
+    const { tasks, count, addTask, deleteTask, toggleTask, updateCount, setFilter, loading} = useTask()
     const [newTask, setNewTask] = useState("")//estado para el input
-    const [filter, setFilter] = useState("all")//estado para el filtro de tareas
 
     const addTaskDummy = () => {
         const newTask = {
@@ -23,11 +15,8 @@ function TaskList({ name }) {
             text: "Nueva Tarea",
             completed: false
         }
-        setTasks([...tasks, newTask])//esta funcion le dice al estado que se actualizó
-    }
-
-    const updateCount = () => {
-        setCount(count+1)
+        // setTasks([...tasks, newTask])//esta funcion le dice al estado que se actualizó
+        addTask(newTask)
     }
 
     const handleChange = (e) => {
@@ -42,31 +31,12 @@ function TaskList({ name }) {
             text: newTask,
             completed: false
         }
-        setTasks([...tasks, newTaskObj])//agrega la nueva tarea al estado
+        // setTasks([...tasks, newTaskObj])//agrega la nueva tarea al estado
+        addTask(newTaskObj)
         setNewTask("")//limpia el input después de agregar la tarea
     }
 
-    const handleDeleteTask = (id) => {
-        const updatedTasks = tasks.filter((t) => t.id !== id)
-        setTasks(updatedTasks)//actualizo el estado con la lista sin la tarea a eliminar
-    }
-
-    const handleToggleTask = (id) => {
-        const updatedTasks = tasks.map((t) => {
-            if (t.id === id) {
-                return { ...t, completed: !t.completed }
-            }
-            return t
-        })
-        setTasks(updatedTasks)
-    }
-
-    const filteredTasks = tasks.filter((t) => {
-        if (filter === "all") return true
-        if (filter === "completed") return t.completed
-        if (filter === "pending") return !t.completed
-    })
-
+    //devuelve archivo jsx.
     return (
         <>
         <h2>{name}</h2>
@@ -87,16 +57,29 @@ function TaskList({ name }) {
                 <button onClick={()=> setFilter("completed")}>Completadas</button>
                 <button onClick={()=> setFilter("pending")}>Pendientes</button>
             </div>
-            
-            {filteredTasks.map((t)=> (
+
+            {/* filteredTask  */}
+            {/* {tasks.map((t)=> (
                 <TaskItem 
                     key={t.id} 
                     task={t} 
-                    completed={t.completed}
-                    onDelete={handleDeleteTask}
-                    onToggle={handleToggleTask}
+                    onDelete={deleteTask}
+                    onToggle={toggleTask}
                 />                
-            ))}
+            ))} */}
+
+            {loading ? (
+                <p>Cargando tareas...</p>
+            ) : (
+                tasks.map((t)=> (
+                    <CardItem 
+                        key={t.id} 
+                        task={t} 
+                        onDelete={deleteTask}
+                        onToggle={toggleTask}
+                    />                
+                ))
+            )}
 
         </ul>
         </>

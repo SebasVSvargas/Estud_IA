@@ -121,3 +121,41 @@ footer {
   color: #f9f9a9;
   border-radius: 6px;
 }
+
+
+/* Card Item styles */
+.card-item {
+  background-color: #3d3a3a;
+  color: #f9f9a9;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;  /* Animación suave */
+}
+
+.card-item.checked {
+  background-color: #0e88c0;  /* Cambia el fondo */
+  color: #070707;
+  border: 3px solid #f9f9a9;  /* Agrega un borde */
+  transform: scale(1.05);      /* Ligeramente más grande */
+  box-shadow: 0 4px 12px rgba(14, 136, 192, 0.5);  /* Sombra más visible */
+}
+
+.priority-high {
+  color: rgb(141, 0, 0); 
+  border-left: 5px solid red;
+  border-radius: 5px;
+  background-color: rgb(184, 108, 108);
+}
+.priority-medium {
+  color: rgb(187, 86, 4);
+  background-color: rgb(224, 188, 133);
+  border-left: 5px solid orange;
+}
+.priority-low {
+  color: green;
+  background-color: rgb(144, 224, 144);
+  border-left: 5px solid green;
+}

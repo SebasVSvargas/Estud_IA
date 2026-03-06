@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-function TaskItem({ task, completed, onToggle, onDelete }) {
+function TaskItem({ task, onToggle, onDelete }) {
 
-    const [isChecked, setIsChecked] = useState(completed)
+    const [isChecked, setIsChecked] = useState(task.completed)
 
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked)
