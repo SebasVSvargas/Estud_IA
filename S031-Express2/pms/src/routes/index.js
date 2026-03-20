@@ -1,21 +1,13 @@
+
 const express = require('express');
 const router = express.Router();
-const projectsController = require('../controllers/projectsController');
 
-// GET routes
-router.get('/api/projects', projectsController.getAllProjects);
-router.get('/api/projects/:id', projectsController.getProjectById);
-router.get('/users', (req, res) => {
-    res.send("Mas de 1000 usuarios registrados");
-});
+// Importar rutas
+const projectRoutes = require('./projects.routes');
+const taskRoutes = require('./tasks.routes');
 
-// POST routes
-router.post('/api/projects', projectsController.createProject);
-
-// PUT routes
-router.put('/api/projects/:id', projectsController.updateProject);
-
-// DELETE routes
-router.delete('/api/projects/:id', projectsController.deleteProject);
+// Usar rutas
+router.use('/projects', projectRoutes);
+router.use('/tasks', taskRoutes);
 
 module.exports = router;

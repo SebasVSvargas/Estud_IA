@@ -3,19 +3,29 @@
 
 const express = require('express');
 const routes = require('./routes');
+const logger = require('./middleware/loggers');
+const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 
-//Middlewares
+//Middlewares - Ejecutarlos antes de las rutas
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
+
+// Middleware de logging
+app.use(logger);
 
 // Rutas raíz
 app.get('/', (req, res) => {
     res.send('Bienvenido a mi servidor Express!');
 });
 
-// Usar rutas de la API
-app.use('/', routes); // ← Dice: "usa todas las rutas desde routes/"
+// Cargar todas las rutas con prefijo /api
+app.use('/api', routes); // ← Dice: "usa todas las rutas desde routes/"
+
+
+//Manejo de errores después de ejecutar las rutas
+app.use(errorHandler);
+
 
 module.exports = app;

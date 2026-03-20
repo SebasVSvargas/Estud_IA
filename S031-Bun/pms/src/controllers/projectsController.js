@@ -7,8 +7,6 @@ let projects = [
 
 // GET - Obtener todos los proyectos
 const getAllProjects = (req, res) => {
-
-    // throw new Error("Error simulado para testing de errorHandler")
     res.json(projects);
 };
 
