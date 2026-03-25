@@ -1,407 +1,394 @@
-# Crear un Proyecto Express desde Cero
+# PMS - Project Management System (Backend)
 
-Guía completa para crear un proyecto backend con **Express.js** y **JavaScript**.
-
----
-
-## 1. Requisitos Previos
-
-- **Node.js** instalado (versión 14 o superior)
-- **npm** (se instala automáticamente con Node.js)
-- Un editor de código (VS Code recomendado)
-- Terminal/CMD accesible
-
-Verifica que tengas Node.js instalado:
-```bash
-node --version
-npm --version
-```
+Sistema de gestión de proyectos. Backend creado con **Express.js**, **SQLite** y **JavaScript**. Este es el **servidor/API** que maneja la lógica de negocio y la base de datos.
 
 ---
 
-## 2. Crear la Carpeta del Proyecto
+## 📦 Librerías Instaladas y Sus Usos
 
-```bash
-# Crear carpeta
-mkdir mi-proyecto-express
+### Dependencias Principales (`npm install`)
 
-# Navegar a la carpeta
-cd mi-proyecto-express
-```
+| Librería | Versión | Propósito | Comando |
+|----------|---------|----------|---------|
+| **express** | ^5.2.1 | Framework web para crear el servidor y rutas HTTP | `npm install express` |
+| **sqlite3** | ^6.0.1 | Driver para conectar a base de datos SQLite | `npm install sqlite3` |
+| **sqlite** | ^5.1.1 | Wrapper para sqlite3 con promesas y async/await | `npm install sqlite` |
+| **dotenv** | ^17.3.1 | Cargar variables de entorno desde `.env` | `npm install dotenv` |
+| **jsonwebtoken** | ^9.0.3 | Crear y validar tokens JWT para autenticación | `npm install jsonwebtoken` |
+| **bcrypt** | ^6.0.0 | Encriptar contraseñas de forma segura | `npm install bcrypt` |
 
----
+### Dependencias de Desarrollo (`npm install --save-dev`)
 
-## 3. Inicializar el Proyecto con npm
-
-```bash
-npm init -y
-```
-
-Esto crea un archivo `package.json` con la configuración básica del proyecto.
-
----
-
-## 4. Instalar Express
-
-```bash
-npm install express
-```
-
-También es recomendable instalar estas herramientas útiles:
-
-```bash
-# Nodemon: reinicia el servidor automáticamente al detectar cambios
-npm install --save-dev nodemon
-
-# Dotenv: para manejar variables de entorno
-npm install dotenv
-```
+| Librería | Versión | Propósito |
+|----------|---------|----------|
+| **nodemon** | ^3.1.14 | Reinicia el servidor automáticamente al guardar cambios |
 
 ---
 
-## 5. Estructura del Proyecto
-
-Crea la siguiente estructura de carpetas:
+## 📁 Estructura del Proyecto
 
 ```
-mi-proyecto-express/
+pms/
 │
 ├── src/
-│   ├── app.js              # Configuración de Express
-│   ├── server.js           # Punto de entrada
+│   ├── server.js                 # 🚀 Punto de entrada (inicia el servidor)
+│   ├── app.js                    # ⚙️ Configuración de Express
+│   │
+│   ├── database/
+│   │   └── db.js                 # 🗄️ Conexión e inicialización de BD
+│   │
 │   ├── routes/
-│   │   └── index.js        # Rutas principales
-│   ├── controllers/        # Lógica de negocio
-│   ├── middleware/         # Middlewares personalizados
-│   └── utils/             # Funciones auxiliares
+│   │   └── index.js              # 🛣️ Definición de endpoints
+│   │
+│   ├── controllers/
+│   │   ├── projectsController.js # 📋 Lógica de proyectos (req/res)
+│   │   └── tasksController.js    # 📋 Lógica de tareas (req/res)
+│   │
+│   ├── services/
+│   │   ├── projects.service.js   # 🔧 Lógica de negocio proyectos
+│   │   └── tasks.service.js      # 🔧 Lógica de negocio tareas
+│   │
+│   ├── middleware/
+│   │   ├── loggers.js            # 📝 Middleware de logs
+│   │   └── errorHandler.js       # ⚠️ Middleware de errores
+│   │
+│   └── utils/
+│       └── (funciones auxiliares)
 │
-├── .env                    # Variables de entorno
-├── .gitignore             # Archivos a ignorar en Git
-├── package.json           # Dependencias del proyec
-└── README.md              # Documentación
+├── database.sqlite               # 🗄️ Archivo de la base de datos
+├── .env                          # 🔐 Variables de entorno (NO SUBIR A GIT)
+├── .gitignore                    # 📌 Archivos a ignorar en Git
+├── package.json                  # 📦 Dependencias del proyecto
+├── node_modules/                 # 📚 Dependencias instaladas (NO SUBIR A GIT)
+└── README.md                     # 📖 Este archivo
 ```
 
 ---
 
-## 6. Archivos Base
+## 🔄 Flujo de la Arquitectura
 
-### 6.1 `package.json` - Configurar scripts
-
-Modifica la sección `"scripts"` en tu `package.json`:
-
-```json
-"scripts": {
-  "start": "node src/server.js",
-  "dev": "nodemon src/server.js",
-  "test": "echo \"Error: no test specified\" && exit 1"
-}
-```
-
-### 6.2 `src/app.js` - Configuración de Express
-
-```javascript
-const express = require('express');
-const app = express();
-
-// Middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Rutas
-app.get('/', (req, res) => {
-  res.json({ mensaje: '¡Bienvenido a Express!' });
-});
-
-module.exports = app;
-```
-
-### 6.3 `src/server.js` - Punto de Entrada
-
-```javascript
-const app = require('./app');
-
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
-});
-```
-
-### 6.4 `.env` - Variables de Entorno
+La solicitud pasa por estas capas de forma **secuencial**:
 
 ```
+Cliente (Frontend)
+    ↓
+    HTTP Request (GET, POST, PUT, DELETE)
+    ↓
+Routes (http://localhost:3000/api/projects)
+    ↓
+Controllers (Parsean req/res)
+    ↓
+Services (Lógica de negocio pura)
+    ↓
+Database (SQLite) - Lectura/Escritura
+    ↓
+Services (Retorna resultado)
+    ↓
+Controllers (Formatea respuesta)
+    ↓
+HTTP Response (JSON)
+    ↓
+Cliente (Frontend)
+```
+
+---
+
+## 🗄️ Base de Datos - SQLite
+
+### ¿Qué es SQLite?
+- Base de datos **relacional** ligera
+- Se guarda en un **archivo único** (`database.sqlite`)
+- **No requiere servidor** (perfecto para aprender)
+- Ideal para desarrollo y pequeños proyectos
+
+### Tablas Creadas
+
+#### Tabla: `projects`
+```sql
+CREATE TABLE projects (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    description TEXT,
+    status TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+#### Tabla: `tasks`
+```sql
+CREATE TABLE tasks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    projectId INTEGER NOT NULL,
+    status TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (projectId) REFERENCES projects(id)
+);
+```
+
+### Inicialización Automática
+Las tablas se crean automáticamente cuando llamas a `initializeDB()` en `database/db.js`.
+
+---
+
+## 🚀 Cómo Ejecutar el Proyecto
+
+### 1. Instalar dependencias
+```bash
+cd pms
+npm install
+```
+
+### 2. Crear archivo `.env`
+```env
 PORT=3000
 NODE_ENV=development
-DATABASE_URL=
 ```
 
-### 6.5 `.gitignore` - Archivos a Ignorar
-
-```
-node_modules/
-.env
-.env.local
-.env.*.local
-dist/
-build/
-*.log
-.DS_Store
-```
-
----
-
-## 7. Ejecutar el Proyecto
-
-### Modo Desarrollo (con nodemon)
-
+### 3. Ejecutar en desarrollo (con nodemon)
 ```bash
 npm run dev
 ```
 
-El servidor se reiniciará automáticamente al guardar cambios.
+Verás en la terminal:
+```
+Base de datos inicializada
+Servidor ejecutándose en http://localhost:3000
+```
 
-### Modo Producción
-
+### 4. Probar la API
+Abre Postman o usa cURL:
 ```bash
-npm start
-```
-
----
-
-## 8. Estructura Recomendada - Ejemplo Expandido
-
-### 8.1 `src/routes/index.js` - Rutas Organizadas
-
-```javascript
-const express = require('express');
-const router = express.Router();
-
-// Rutas de ejemplo
-router.get('/api/usuarios', (req, res) => {
-  res.json({ usuarios: [] });
-});
-
-router.post('/api/usuarios', (req, res) => {
-  const { nombre, email } = req.body;
-  res.status(201).json({ 
-    mensaje: 'Usuario creado',
-    usuario: { nombre, email }
-  });
-});
-
-module.exports = router;
-```
-
-### 8.2 `src/app.js` - Con Rutas Integradas
-
-```javascript
-const express = require('express');
-const routes = require('./routes');
-
-const app = express();
-
-// Middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Petición de prueba
-app.get('/', (req, res) => {
-  res.json({ mensaje: '¡Servidor Express activo!' });
-});
-
-// Usar rutas
-app.use('/', routes);
-
-// Manejo de rutas no encontradas
-app.use((req, res) => {
-  res.status(404).json({ error: 'Ruta no encontrada' });
-});
-
-module.exports = app;
-```
-
-### 8.3 `src/controllers/usuariosController.js` - Lógica de Negocio
-
-```javascript
-// Simulación de base de datos en memoria
-const usuarios = [];
-
-const obtenerUsuarios = (req, res) => {
-  res.json(usuarios);
-};
-
-const crearUsuario = (req, res) => {
-  const { nombre, email } = req.body;
-  
-  if (!nombre || !email) {
-    return res.status(400).json({ error: 'Nombre y email requeridos' });
-  }
-  
-  const nuevoUsuario = {
-    id: usuarios.length + 1,
-    nombre,
-    email,
-    fechaCreacion: new Date()
-  };
-  
-  usuarios.push(nuevoUsuario);
-  res.status(201).json(nuevoUsuario);
-};
-
-const obtenerUsuarioPorId = (req, res) => {
-  const { id } = req.params;
-  const usuario = usuarios.find(u => u.id === parseInt(id));
-  
-  if (!usuario) {
-    return res.status(404).json({ error: 'Usuario no encontrado' });
-  }
-  
-  res.json(usuario);
-};
-
-module.exports = {
-  obtenerUsuarios,
-  crearUsuario,
-  obtenerUsuarioPorId
-};
-```
-
----
-
-## 9. Comandos Útiles
-
-```bash
-# Instalar una dependencia
-npm install nombre-paquete
-
-# Instalar una dependencia de desarrollo
-npm install --save-dev nombre-paquete
-
-# Ver lista de dependencias
-npm list
-
-# Actualizar dependencias
-npm update
-
-# Limpiar caché de npm
-npm cache clean --force
-```
-
----
-
-## 10. Paquetes Recomendados Adicionales
-
-```bash
-# CORS: Permitir requests desde otros orígenes
-npm install cors
-
-# Validación de datos
-npm install joi
-
-# Documentación automática de API
-npm install swagger-ui-express swagger-jsdoc
-
-# Seguridad HTTP
-npm install helmet
-
-# Morgan: Logger de requests
-npm install morgan
-```
-
-**Ejemplo de uso:**
-
-```javascript
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const morgan = require('morgan');
-
-const app = express();
-
-app.use(helmet());
-app.use(cors());
-app.use(morgan('dev'));
-app.use(express.json());
-
-// ... resto del código
-```
-
----
-
-## 11. Probando la API
-
-### Con cURL
-
-```bash
-# GET
 curl http://localhost:3000/
-
-# POST
-curl -X POST http://localhost:3000/api/usuarios \
-  -H "Content-Type: application/json" \
-  -d '{"nombre":"Juan","email":"juan@example.com"}'
 ```
+
+---
+
+## 🧪 Testear Endpoints
 
 ### Con Postman
 
-1. Descarga [Postman](https://www.postman.com/downloads/)
-2. Crea una nueva petición
-3. Selecciona el método (GET, POST, etc.)
-4. Introduce la URL: `http://localhost:3000`
-5. Envía la petición
+**GET** - Obtener tareas por proyecto
+```
+GET http://localhost:3000/api/projects/1/tasks
+```
+
+**POST** - Crear nueva tarea
+```
+POST http://localhost:3000/api/projects/1/tasks
+Body (JSON):
+{
+  "title": "Implementar API",
+  "status": "InProgress"
+}
+```
+
+**PUT** - Actualizar tarea
+```
+PUT http://localhost:3000/api/tasks/1
+Body (JSON):
+{
+  "title": "Implementar API v2",
+  "status": "Done"
+}
+```
+
+**DELETE** - Eliminar tarea
+```
+DELETE http://localhost:3000/api/tasks/1
+```
 
 ---
 
-## 12. Variables de Entorno con .env
+## 🌐 Frontend - ¿Dónde va? ¿Cómo se conecta?
 
-### Instalar dotenv
+### Arquitectura Cliente-Servidor
+
+```
+┌─────────────────────────────────┐
+│      FRONTEND (React/Vue)       │
+│  - Interfaz de Usuario (UI)     │
+│  - Formularios                  │
+│  - Botones, Listas              │
+│  Puerto: http://localhost:3173  │
+└──────────────────┬──────────────┘
+                   │
+                   │ HTTP llamadas (fetch/axios)
+                   │
+         ┌─────────▼──────────┐
+         │  API REST (Express)│
+         │  Puerto: 3000      │
+         │─────────────────────
+         │  Rutas: /api/*
+         │  Base de datos
+         └────────────────────┘
+```
+
+### Paquetes Necesarios para Frontend
+
+Si quieres crear el frontend en el **mismo proyecto** (monorepo):
 
 ```bash
-npm install dotenv
+# Crear frontend con Vite + React
+npm create vite@latest frontend -- --template react
+
+# O con Vue
+npm create vite@latest frontend -- --template vue
 ```
 
-### En `src/server.js`
+O crear **proyecto separado** (más limpio):
+```bash
+# En otra carpeta
+npx create-react-app my-frontend
+# O
+npm create vite@latest my-frontend -- --template react
+```
+
+### Paquetes Frontend Recomendados
+
+```bash
+# Para comunicación con API
+npm install axios
+
+# Para gestionar estado
+npm install zustand  # o Redux, Context API
+
+# Para enrutamiento (si usas React)
+npm install react-router-dom
+
+# Para UI bonita
+npm install @shadcn/ui  # o Material-UI, Tailwind CSS
+
+# Para validación de formularios
+npm install react-hook-form
+```
+
+### Ejemplo: Conectar Frontend con Backend
+
+**React haciendo petición al backend:**
 
 ```javascript
-require('dotenv').config();
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 
-const app = require('./app');
-const PORT = process.env.PORT || 3000;
+export function TaskList() {
+  const [tasks, setTasks] = useState([]);
 
-app.listen(PORT, () => {
-  console.log(`Servidor en puerto ${PORT}`);
-});
+  useEffect(() => {
+    // Conectar al backend en puerto 3000
+    axios.get('http://localhost:3000/api/projects/1/tasks')
+      .then(response => setTasks(response.data))
+      .catch(error => console.error('Error:', error));
+  }, []);
+
+  return (
+    <ul>
+      {tasks.map(task => (
+        <li key={task.id}>{task.title} - {task.status}</li>
+      ))}
+    </ul>
+  );
+}
 ```
 
 ---
 
-## 13. Resumen Checklist
+## 📌 Habilitación de CORS (Importante para Frontend)
 
-- [ ] Node.js instalado
-- [ ] Crear carpeta del proyecto
-- [ ] `npm init -y`
-- [ ] `npm install express`
-- [ ] `npm install --save-dev nodemon`
-- [ ] Crear estructura de carpetas
-- [ ] Crear `src/app.js`
-- [ ] Crear `src/server.js`
-- [ ] Configurar scripts en `package.json`
-- [ ] `npm run dev` o `npm start`
-- [ ] Verificar que el servidor corre en `http://localhost:3000`
+El frontend (localhost:3173) y backend (localhost:3000) tienen diferente **origen**. Necesitas permitir CORS:
 
----
+### 1. Instalar cors
+```bash
+npm install cors
+```
 
-## 14. Próximos Pasos
+### 2. Agregar a `src/app.js`
+```javascript
+const cors = require('cors');
 
-Una vez tengas el servidor básico funcionando:
+app.use(cors({
+  origin: 'http://localhost:3173', // Tu frontend
+  credentials: true
+}));
 
-1. **Conectar a base de datos** (MongoDB, PostgreSQL, MySQL)
-2. **Implementar autenticación** (JWT, sessions)
-3. **Crear middlewares personalizados**
-4. **Documentar API con Swagger**
-5. **Agregar tests** (Jest, Mocha)
-6. **Desplegar** (Heroku, Railway, Render, AWS)
+app.use(express.json());
+```
 
 ---
 
-**¡Listo! Ya tienes un proyecto Express funcional.** 🚀
+## 📊 Estructura de Carpetas: Backend + Frontend Juntos
+
+### Opción 1: Mismo Repositorio (Monorepo)
+```
+PMS/
+├── backend/              # Backend Express
+│   ├── src/
+│   ├── package.json
+│   └── ...
+├── frontend/             # Frontend React
+│   ├── src/
+│   ├── package.json
+│   └── ...
+└── README.md
+```
+
+### Opción 2: Repositorios Separados (Recomendado)
+```
+pms-backend/             # Este proyecto
+├── src/
+├── package.json
+
+pms-frontend/            # Otro proyecto
+├── src/
+├── package.json
+```
+
+---
+
+## 🔐 Variables de Entorno - `.env`
+
+```env
+# Servidor
+PORT=3000
+NODE_ENV=development
+
+# Base de datos
+DATABASE_PATH=./database.sqlite
+
+# Autenticación
+JWT_SECRET=tu_secreto_super_seguro_aqui
+JWT_EXPIRE=7d
+
+# CORS
+FRONTEND_URL=http://localhost:3173
+```
+
+---
+
+## ✅ Checklist - Estructura Completa
+
+- [ ] Backend iniciado con `npm run dev`
+- [ ] Puedo acceder a `http://localhost:3000`
+- [ ] Base de datos `database.sqlite` se crea automáticamente
+- [ ] Endpoints funcionando en Postman
+- [ ] Frontend creado (React/Vue) en otra carpeta
+- [ ] Frontend hace peticiones al backend (axios)
+- [ ] CORS habilitado en backend
+- [ ] Frontend e backend se comunican correctamente
+
+---
+
+## 🚄 Próximos Pasos
+
+1. **Crear Frontend** - React o Vue en otra carpeta
+2. **Conectar Frontend con Backend** - Axios + Variables de entorno
+3. **Autenticación** - JWT (jsonwebtoken) + bcrypt
+4. **Validación de datos** - Joi o Zod
+5. **Logging** - Morgan
+6. **Testing** - Jest (backend) + Vitest (frontend)
+7. **Desplegar** - Vercel (frontend) + Railway/Render (backend)
+
+---
+
+**¡Ya tienes un proyecto Full-Stack listo para empezar!** 🚀
+
