@@ -155,11 +155,17 @@ const deleteTask = async (req, res) => {
     res.json({ message: "Task deleted", task: result.data });
 }
 
+const getCurrentUser = (req, res) => {
+    res.json({ user: req.user})
+}
+
+
 
 module.exports = {
     getTasksByProjectId,
     createTask,
     getTaskById,
     updateTask,
-    deleteTask
+    deleteTask,
+    getCurrentUser
 }

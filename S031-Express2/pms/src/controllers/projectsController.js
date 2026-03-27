@@ -117,7 +117,10 @@ const deleteProject = (req, res) => {
         return res.status(404).json({ error: "Proyecto no encontrado" });
     }
 
-    res.status(200).json({ message: "Proyecto Eliminado", project: deletedProject });
+    res.status(200).json(
+        { message: "Proyecto Eliminado", 
+            project: deletedProject 
+        });
 };
 
 

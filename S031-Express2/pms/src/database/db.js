@@ -35,8 +35,11 @@ async function initializeDB() {
             name TEXT NOT NULL,
             email TEXT NOT NULL UNIQUE,
             password TEXT NOT NULL,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            role TEXT DEFAULT 'user'
         );
+
+        -- ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'user';
     `);
     return db;
 }

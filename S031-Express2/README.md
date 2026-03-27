@@ -131,6 +131,57 @@ Las tablas se crean automáticamente cuando llamas a `initializeDB()` en `databa
 
 ---
 
+## 🔐 Autenticación con JWT
+
+Creamos un sistema de autenticación básico usando **JSON Web Tokens (JWT)**. Esto permite que el frontend se autentique y acceda a rutas protegidas.
+
+  ### flujo de autenticación:
+
+  - Client -> login (email + password)
+  - Server -> verifica credenciales
+  - Server -> genera JWT (con id, name, email)
+  - Client -> recibe JWT y lo almacena (localStorage/sessionStorage)
+  - Client -> envía JWT en headers para acceder a rutas protegidas
+  - Server -> verifica JWT en cada solicitud protegida
+
+  ### JWT Json Web Token
+  - Es un token firmado que contiene información del usuario
+  ```javascript
+  jwt.sign({ id, name, email }, JWT_SECRET, { expiresIn: '1h' })
+  ```
+  HEADER: Authorization (Bearer TOKEN)
+  PAYLOAD: { id, name, email }
+  SIGNATURE: Firma con JWT_SECRET
+
+---
+
+## Autorización - Middleware `authenticate`
+
+  Es una segunda capa de seguridad que verifica el JWT en cada solicitud a rutas protegidas. Si el token es válido, permite el acceso; si no, devuelve un error 401.
+
+  Roles: admin (Todo), user (Crear tareas y proyectos), guest (Solo lectura)
+
+
+  ```javascript
+  function authenticate(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+
+    if (!token) return res.status(401).json({ error: 'Token no proporcionado' });
+
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+      if (err) return res.status(403).json({ error: 'Token inválido' });
+      req.user = user; // Agrega info del usuario al request
+      next(); // Continúa a la siguiente función
+    });
+  }
+  ```
+
+
+
+
+---
+
 ## 🚀 Cómo Ejecutar el Proyecto
 
 ### 1. Instalar dependencias

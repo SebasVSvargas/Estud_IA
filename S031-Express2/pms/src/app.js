@@ -4,7 +4,7 @@
 //Request -> instanciar BD -> logger(Middleware) -> rutas -> errorHandler(Middleware) -> response
 
 const express = require('express');
-const routes = require('./routes');
+const routes = require('./routes'); //llama por defecto al index.js dentro de routes
 const logger = require('./middleware/loggers');
 const errorHandler = require('./middleware/errorHandler');
 const initializeDB = require('./database/db').initializeDB;
@@ -26,6 +26,11 @@ app.initDB = initDB;
 
 // Middleware de logging
 app.use(logger);
+
+
+const authRoutes = require('./auth/auth.routes');
+app.use('/api/auth', authRoutes); // Rutas de autenticación con prefijo /api/auth
+
 
 // Rutas raíz
 app.get('/', (req, res) => {

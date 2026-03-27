@@ -8,7 +8,8 @@ const registerUser = async (db, data) => {
 
     try {
         
-        const { name, email, password } = data;
+
+        const { name, email, password, role } = data;
         
         if (!name || !email || !password) {
             return { success: false, error: "Name, email y password son requeridos" };
@@ -17,11 +18,11 @@ const registerUser = async (db, data) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         
         const result = await db.run(
-            'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-            [name, email, hashedPassword]
+            'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
+            [name, email, hashedPassword, role || 'user']
         );
 
-        const newUser = await db.get('SELECT id, name, email FROM users WHERE id = ?', result.lastID);
+        const newUser = await db.get('SELECT id, name, email, role FROM users WHERE id = ?', result.lastID);
 
         return { 
             success: true, 
@@ -53,7 +54,11 @@ const loginUser = async (db, data) => {
         return { success: false, error: "Contraseña incorrecta" };
     }
 
-    const token = jwt.sign({ id: user.id, name: user.name, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign(
+        { id: user.id, name: user.name, email: user.email, role: user.role }, 
+        JWT_SECRET, 
+        { expiresIn: '1h' }
+    );
 
     return { 
         success: true, 
