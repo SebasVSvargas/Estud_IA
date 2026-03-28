@@ -40,6 +40,10 @@ app.get('/', (req, res) => {
 // Cargar todas las rutas con prefijo /api
 app.use('/api', routes); // ← Dice: "usa todas las rutas desde routes/"
 
+// Documentación Swagger
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpecs = require('./docs/swagger');
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 //Manejo de errores después de ejecutar las rutas
 app.use(errorHandler);

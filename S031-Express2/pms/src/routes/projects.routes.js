@@ -9,6 +9,10 @@ const authenticate = require('../middleware/auth');
 const authorize = require('../middleware/authorize');
 
 // GET routes
+
+
+//** 
+// */
 router.get('/', projectsController.getAllProjects);
 router.get('/:id', projectsController.getProjectById);
 router.get('/:projectId/tasks', getTasksByProjectId);

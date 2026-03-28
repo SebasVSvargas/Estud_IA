@@ -13,9 +13,34 @@ const getAllProjects = async (req, res) => {
 
     //throw new Error("Error simulado para testing de errorHandler")
     // res.json(projects);
-
+    
     const db = req.app.locals.db; // Obtener la instancia de la base de datos desde app.locals
-    const projects = await projectsService.getAllProjects(db)
+
+    const { status, description } = req.query;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
+    const sort = req.query.sort || 'created_at';
+
+    let query = "SELECT * FROM projects WHERE 1=1";
+    let params = [];
+
+    if (status) {
+        query += " AND status = ?";
+        params.push(status);
+    }
+    if (description) {
+        query += " AND description LIKE ?";
+        params.push(`%${description}%`);
+    }
+    
+    query += ` ORDER BY ${sort} ASC`; //Debe ir antes de la paginacion
+    query += " LIMIT ? OFFSET ?";
+    params.push(limit, offset);
+
+    const projects = await db.all(query, params);
+
+    // const projects = await projectsService.getAllProjects(db)
 
     res.json(projects);
 };

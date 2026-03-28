@@ -8,11 +8,26 @@ const {
     getTaskById, 
     updateTask, 
     deleteTask,
-    getCurrentUser
+    getCurrentUser,
+    listTasks
 } = require('../controllers/tasksController')
 const authenticate = require('../middleware/auth');
 const authorize = require('../middleware/authorize');
 
+
+/**
+* @openapi
+* /api/tasks/listTasks:
+*   get:
+*     summary: Lista todas las tareas con paginación, filtrado y ordenamiento
+*     tags: [Tasks]
+*     responses:
+*       200:
+*         description: Lista de tareas obtenida exitosamente         
+*       500:
+*         description: Error del servidor
+*/
+router.get('/listTasks', listTasks)
 
 router.get('/me', authenticate, getCurrentUser)
 
