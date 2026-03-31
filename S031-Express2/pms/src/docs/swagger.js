@@ -14,7 +14,18 @@ const options = {
                 url: '/', //'http://localhost:3000/',
                 description: 'Servidor local'
             }
-        ]
+        ],
+
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT'
+                }
+            }
+        },
+
     },
 
     apis: ['./src/routes/*.js', './src/controllers/*.js', './src/auth/*.js'] // Rutas donde se encuentran los endpoints y modelos para generar la documentación

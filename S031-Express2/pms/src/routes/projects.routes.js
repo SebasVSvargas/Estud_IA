@@ -19,6 +19,37 @@ router.get('/:projectId/tasks', getTasksByProjectId);
 
 // POST routes
 // router.post('/', validateProject, projectsController.createProject);
+
+/**
+ * @openapi
+ * /api/projects:
+ *   post:
+ *     summary: Crea un nuevo proyecto
+ *     description: Crea un nuevo proyecto con los datos proporcionados
+ *     tags: [Projects]
+ *     security:
+ *          - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name: 
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               status:
+ *                 type: string
+ *             required:
+ *              - name               
+ *     responses:
+ *       201:
+ *         description: Proyecto creado exitosamente
+ *       400:
+ *         description: Solicitud inválida
+ */
 router.post('/', 
     authenticate, 
     authorize(['admin', 'user']), 

@@ -8,9 +8,12 @@ const routes = require('./routes'); //llama por defecto al index.js dentro de ro
 const logger = require('./middleware/loggers');
 const errorHandler = require('./middleware/errorHandler');
 const initializeDB = require('./database/db').initializeDB;
-
+const cors = require('cors');
 
 const app = express();
+
+app.use(cors()); // Habilitar CORS para todas las rutas
+
 
 app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
