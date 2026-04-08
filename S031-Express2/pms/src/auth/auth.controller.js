@@ -13,7 +13,7 @@ const login = async (req, res) => {
     if (!result.success) {
         return res.status(400).json({ error: result.error });
     }
-    res.json({ token: result.data });
+    res.json({ token: result.data.token });
 }
 
 module.exports = {

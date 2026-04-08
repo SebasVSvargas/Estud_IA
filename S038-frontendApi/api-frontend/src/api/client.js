@@ -7,4 +7,17 @@ const apiClient = axios.create({
     },
 });
 
+//el interceptor se ejecuta antes de cada solicitud, agregando el token de autenticación a los encabezados si está 
+//presente en el almacenamiento local. Esto asegura que todas las solicitudes a la API estén autenticadas correctamente.
+apiClient.interceptors.request.use(config => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+    }, error => {
+        return Promise.reject(error);
+});
+
+
 export default apiClient;

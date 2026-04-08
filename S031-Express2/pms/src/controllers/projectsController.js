@@ -69,24 +69,9 @@ const getProjectById = (req, res) => {
 };
 
 // POST - Crear nuevo proyecto
-const createProject = (req, res) => {
-    // const { name, description } = req.body;
-    
-    // if (!name || !description) {
-    //     return res.status(400).json({ error: "Name y description son requeridos" });
-    // }
-    
-    // const newProject = {
-    //     id: projects.length > 0 ? Math.max(...projects.map(p => p.id)) + 1 : 1,
-    //     name,
-    //     description
-    // };
-    
-    // projects.push(newProject);
-    // res.status(201).json({ message: "Proyecto creado", project: newProject });
-
+const createProject = async (req, res) => {
     const db = req.app.locals.db;
-    const project = projectsService.createProject(db, req.body);
+    const project = await projectsService.createProject(db, req.body);
     res.status(201).json({ message: "Proyecto creado", project });
 };
 

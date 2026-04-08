@@ -17,7 +17,7 @@ const Login = ({ setIsLoggedIn }) => {
             localStorage.setItem('token', token);
             
             setIsLoggedIn(true);
-            navigate('/projects');
+            navigate('/dashboard');
             
             console.log('Login successful:', response.data);
         } catch (error) {
