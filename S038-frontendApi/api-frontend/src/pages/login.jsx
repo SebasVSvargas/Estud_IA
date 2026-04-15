@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import apiClient from '../api/client';
+import AuthContext from '../context/AuthContext';
+import { useContext } from 'react';
 
 const Login = ({ setIsLoggedIn }) => {
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -14,8 +17,8 @@ const Login = ({ setIsLoggedIn }) => {
             const response = await apiClient.post('/auth/login', { email, password });
 
             const token = response.data.token;
-            localStorage.setItem('token', token);
-            
+            // localStorage.setItem('token', token);
+            login(token);            
             setIsLoggedIn(true);
             navigate('/dashboard');
             

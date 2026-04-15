@@ -1,16 +1,20 @@
 import NavBar from '../components/NavBar';
 import { useEffect, useState } from 'react';
 import apiClient from '../api/client';
-import CardProject from '../components/ProjectCard';
+import ProjectCard from '../components/ProjectCard';
 import { useNavigate } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
+import { useContext } from 'react';
+
 
 const Dashboard = ({ setIsLoggedIn }) => {
 
     const [projects, setProjects] = useState([]);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');  
-    const navigate = useNavigate();
     
+    const { user } = useContext(AuthContext);
+
     const handleDeleteProject = async (id) => {
         if (!window.confirm('Are you sure you want to delete this project?')) return;
         try {
@@ -81,24 +85,12 @@ const Dashboard = ({ setIsLoggedIn }) => {
 
                 <div className='row'>
                     {projects.map(project => (
-                        <div className='col-md-4' key={project.id}>
-                            <div className='card p-3 mb-3'>
-                                <div className='card-body'>
-                                    <h5 className='card-title'>{project.name}</h5>
-                                    <p className='card-text'>{project.description}</p>
-                                    <button 
-                                        className="btn btn-primary btn-sm" 
-                                        onClick={() => navigate(`/projects/${project.id}/tasks`)}>
-                                        View Tasks
-                                    </button>
-                                    <button 
-                                        className="btn btn-danger btn-sm" 
-                                        onClick={() => handleDeleteProject(project.id)}>
-                                        Delete
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <ProjectCard 
+                            key={project.id} 
+                            project={project} 
+                            handleDeleteProject={handleDeleteProject}
+                            user={user}
+                        />
                     ))}
                 </div>
             </div>

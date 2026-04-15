@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import apiClient from "../api/client";
 import TaskCard from "../components/TaskCard";
+import AuthContext from "../context/AuthContext";
+import { useContext } from "react";
 
 
 const ListTasks = () => {
@@ -10,6 +12,8 @@ const ListTasks = () => {
     const [tasks, setTasks] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    
+    const { user } = useContext(AuthContext);
 
     const [titleInput, setTitleInput] = useState('Title1');
     const [descriptionInput, setDescriptionInput] = useState('Description1');
