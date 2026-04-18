@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link'
 
 export default function NavBar() {
@@ -16,7 +14,7 @@ export default function NavBar() {
                 </Link>
             </li>
             <li>
-                <Link href="/productos/1" className="hover:text-blue-200">
+                <Link href="/productos/" className="hover:text-blue-200">
                 Productos
                 </Link>
             </li>
