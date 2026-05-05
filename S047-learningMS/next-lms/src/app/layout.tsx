@@ -32,21 +32,23 @@
 //   );
 // }
 
-import { JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono, Nunito_Sans, Geist } from "next/font/google";
 import "./globals.css";
 import type { ReactNode } from "react"
 import { AuthProvider } from "@/components/providers/session-provider"
+import { cn } from "@/lib/utils";
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-})
+const jetbrainsMonoHeading = JetBrains_Mono({subsets:['latin'],variable:'--font-heading'});
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+
+const jetbrainsMono = JetBrains_Mono({subsets:['latin'],variable:'--font-mono'})
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${jetbrainsMono.variable}`}
+      className={cn( jetbrainsMono.variable, "font-sans", geist.variable, jetbrainsMonoHeading.variable)}
     >
       <body>
         <AuthProvider>

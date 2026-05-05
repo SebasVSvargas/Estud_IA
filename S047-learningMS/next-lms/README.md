@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next LMS
 
-## Getting Started
+Proyecto de aprendizaje en línea construido con Next.js, App Router, NextAuth y Prisma sobre PostgreSQL.
 
-First, run the development server:
+## Documentación principal
+
+- [Guía de estructura del proyecto](./docs/PROJECT_STRUCTURE.md)
+- [Guía de Prisma](./docs/PRISMA_GUIDE.md)
+- [Guía de instalación inicial](./SETUP_GUIDE.md)
+
+## Arranque rápido
 
 ```bash
+npm install
+npx prisma generate
+npx prisma migrate deploy
+npx prisma db seed
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre `http://localhost:3000` en el navegador.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Stack principal
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js 16
+- React 19
+- Prisma 7
+- PostgreSQL
+- NextAuth
+- Tailwind CSS
 
-## Learn More
+## Variables importantes
 
-To learn more about Next.js, take a look at the following resources:
+Revisa `.env.example` para ver las variables base del proyecto. La más importante para Prisma es:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```env
+DATABASE_URL="postgresql://postgres:password@localhost:5432/nextlms_dev?schema=public"
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Nota de estudio
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Si tu objetivo es poder reconstruir el proyecto desde cero o recordar el flujo de Prisma, empieza por la guía de Prisma y luego revisa la estructura del proyecto.
